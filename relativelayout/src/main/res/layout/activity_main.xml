@@ -6,4 +6,192 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/centerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/center" />
+
+    <!-- Оранжевая линия -->
+    <View
+        android:id="@+id/topView"
+        android:layout_width="10dp"
+        android:layout_height="100dp"
+        android:layout_above="@id/centerButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:background="#ff8800" />
+
+    <!-- Зелёная линия -->
+    <View
+        android:id="@+id/bottomView"
+        android:layout_width="10dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/centerButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="#4CAF50" />
+
+    <!-- Голубая линия -->
+    <View
+        android:id="@+id/startView"
+        android:layout_width="100dp"
+        android:layout_height="10dp"
+        android:layout_toStartOf="@id/centerButton"
+        android:layout_marginEnd="10dp"
+        android:layout_centerVertical="true"
+        android:background="#0088ff" />
+
+    <!-- Розовая линия -->
+    <View
+        android:id="@+id/endView"
+        android:layout_width="100dp"
+        android:layout_height="10dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@id/centerButton"
+        android:background="#ff88ff" />
+
+    <View
+        android:id="@+id/startLeft"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:background="#14A839" />
+
+    <View
+        android:id="@+id/endRight"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:background="#14A839" />
+
+    <View
+        android:id="@+id/startBottom"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#14A839" />
+
+    <View
+        android:id="@+id/endBottom"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="#14A839" />
+
+    <View
+        android:id="@+id/redTL"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/topView"
+        android:layout_alignStart="@+id/startView"
+        android:background="#E33B49" />
+
+    <View
+        android:id="@+id/redTR"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/topView"
+        android:layout_alignEnd="@+id/endView"
+        android:background="#E33B49" />
+
+    <View
+        android:id="@+id/redBR"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/bottomView"
+        android:layout_alignEnd="@+id/redTR"
+        android:background="#E33B49" />
+
+    <View
+        android:id="@+id/redBL"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/bottomView"
+        android:layout_alignStart="@+id/redTL"
+        android:background="#E33B49" />
+
+    <!-- Элемент между двумя другими -->
+    <TextView
+        android:id="@+id/betweenTwoViews"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:layout_toStartOf="@+id/endRight"
+        android:layout_toEndOf="@+id/startLeft"
+        android:background="#FF5722"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Between two views"
+        android:textColor="#fff" />
+
+    <!-- Элемент между двумя другими -->
+    <TextView
+        android:id="@+id/betweenTwoViews2"
+        android:layout_width="30dp"
+        android:layout_height="0dp"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/endBottom"
+        android:layout_below="@+id/startLeft"
+        android:background="#FF5722"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Between two views"
+        android:textColor="#fff" />
+
+    <TextView
+        android:id="@+id/betweenTwoViews3"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_above="@+id/redTR"
+        android:layout_marginBottom="40dp"
+        android:layout_alignStart="@+id/startView"
+        android:layout_alignEnd="@+id/redTR"
+        android:background="#FF5722"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/between_two_views"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/betweenTwoViews4"
+        android:layout_width="30dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_alignBottom="@+id/redBL"
+        android:layout_alignTop="@+id/betweenTwoViews3"
+        android:background="#FF5722"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Between two views"
+        android:textColor="#fff" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/betweenTwoViews3"
+        android:layout_below="@+id/betweenTwoViews"
+        android:layout_alignStart="@+id/betweenTwoViews"
+        android:layout_alignEnd="@+id/betweenTwoViews"
+        android:background="#BABDBF">
+
+        <!-- Внутри FrameLayout-а работает layout_gravity -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:background="#2196F3"
+            android:padding="10dp"
+            android:text="Center between 4 views"
+            android:textColor="#fff" />
+
+    </FrameLayout>
+
 </RelativeLayout>

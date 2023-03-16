@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RelativeLayout</string>
+    <string name="center">Center</string>
+    <string name="between_two_views">Between two views</string>
 </resources>
