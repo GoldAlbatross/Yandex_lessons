@@ -102,13 +102,13 @@ class MoviesActivity : MvpActivity(), MoviesView {
         }
     }
 
-    override fun showLoading() {
+    private fun showLoading() {
         moviesList.visibility = GONE
         placeholderMessage.visibility = GONE
         progressBar.visibility = VISIBLE
     }
 
-    override fun showError(errorMessage: String) {
+    private fun showError(errorMessage: String) {
         moviesList.visibility = GONE
         placeholderMessage.visibility = VISIBLE
         progressBar.visibility = GONE
@@ -116,11 +116,11 @@ class MoviesActivity : MvpActivity(), MoviesView {
         placeholderMessage.text = errorMessage
     }
 
-    override fun showEmpty(emptyMessage: String) {
+    private fun showEmpty(emptyMessage: String) {
         showError(emptyMessage)
     }
 
-    override fun showContent(movies: List<Movie>) {
+    private fun showContent(movies: List<Movie>) {
         moviesList.visibility = VISIBLE
         placeholderMessage.visibility = GONE
         progressBar.visibility = GONE
