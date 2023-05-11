@@ -81,7 +81,7 @@
         android:layout_marginTop="32dp"
         android:background="@android:color/holo_blue_light"
         android:text="View7"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintEnd_toStartOf="@+id/view8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view4"
