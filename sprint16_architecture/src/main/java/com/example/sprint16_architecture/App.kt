@@ -9,7 +9,6 @@ class App: Application() {
         lateinit var instance: App
         private set
     }
-    var moviesSearchPresenter : MoviesSearchPresenter? = null
 
     override fun onCreate() {
         super.onCreate()

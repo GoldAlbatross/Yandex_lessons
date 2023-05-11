@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+
+    //Moxy
+    id 'kotlin-kapt'
 }
 
 android {
@@ -52,4 +55,10 @@ dependencies {
 
     //requests logging
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
+
+    //Moxy
+    def moxyVersion = '2.2.2'
+    implementation "com.github.moxy-community:moxy:$moxyVersion"
+    implementation "com.github.moxy-community:moxy-android:$moxyVersion"
+    kapt "com.github.moxy-community:moxy-compiler:$moxyVersion"
 }

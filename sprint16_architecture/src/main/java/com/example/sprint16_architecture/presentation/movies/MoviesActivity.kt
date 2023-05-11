@@ -1,6 +1,5 @@
 package com.example.sprint16_architecture.presentation.movies
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -15,24 +14,20 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sprint16_architecture.App
 import com.example.sprint16_architecture.R
 import com.example.sprint16_architecture.domain.models.Movie
 import com.example.sprint16_architecture.util.Creator
 import com.example.sprint16_architecture.presentation.poster.PosterActivity
 import com.example.sprint16_architecture.util.MoviesState
+import moxy.MvpActivity
+import moxy.presenter.InjectPresenter
+import moxy.presenter.ProvidePresenter
 
-class MoviesActivity : Activity(), MoviesView {
+class MoviesActivity : MvpActivity(), MoviesView {
 
     companion object { private const val CLICK_DEBOUNCE_DELAY = 1000L }
-    private var presenter = App.instance.moviesSearchPresenter
-    private val adapter = MoviesAdapter {
-        if (clickDebounce()) {
-            val intent = Intent(this, PosterActivity::class.java)
-            intent.putExtra("poster", it.image)
-            startActivity(intent)
-        }
-    }
+    @InjectPresenter
+    lateinit var presenter: MoviesSearchPresenter
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var queryInput: EditText
     private lateinit var placeholderMessage: TextView
@@ -40,15 +35,24 @@ class MoviesActivity : Activity(), MoviesView {
     private lateinit var progressBar: ProgressBar
     private var isClickAllowed = true
     private var textWatcher: TextWatcher? = null
+    private val adapter = MoviesAdapter {
+        if (clickDebounce()) {
+            val intent = Intent(this, PosterActivity::class.java)
+            intent.putExtra("poster", it.image)
+            startActivity(intent)
+        }
+    }
+
+    @ProvidePresenter
+    fun providePresenter(): MoviesSearchPresenter {
+        return Creator.provideMoviesSearchPresenter(
+            context = this.applicationContext,
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movies)
-
-        if (presenter == null) {
-            presenter = Creator.provideMoviesSearchPresenter(context = this)
-            App.instance.moviesSearchPresenter = presenter
-        }
 
         placeholderMessage = findViewById(R.id.placeholderMessage)
         queryInput = findViewById(R.id.queryInput)
@@ -61,7 +65,7 @@ class MoviesActivity : Activity(), MoviesView {
         textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                presenter!!.searchDebounce(
+                presenter.searchDebounce(
                     changedText = s?.toString() ?: ""
                 )
             }
@@ -70,35 +74,9 @@ class MoviesActivity : Activity(), MoviesView {
         textWatcher?.let { queryInput.addTextChangedListener(it) }
     }
 
-    override fun onStart() {
-        super.onStart()
-        presenter?.attachView(this)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        presenter?.attachView(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        presenter?.detachView()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        presenter?.detachView()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        presenter?.detachView()
-    }
     override fun onDestroy() {
         super.onDestroy()
-        if (isFinishing) { App.instance.moviesSearchPresenter = null }
-        presenter?.detachView()
-        presenter?.onDestroy()
+        presenter.onDestroy()
         textWatcher?.let { queryInput.removeTextChangedListener(it) }
     }
 
