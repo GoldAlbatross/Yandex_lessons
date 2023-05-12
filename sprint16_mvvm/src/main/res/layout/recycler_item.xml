@@ -33,11 +33,5 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="italic"/>
-        <ImageView android:id="@+id/favorite"
-            android:layout_gravity="end"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:src="@drawable/active_favorire"/>
-
     </LinearLayout>
 </LinearLayout>

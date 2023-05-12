@@ -12,22 +12,19 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sprint16_architecture.R
 import com.example.sprint16_architecture.domain.models.Movie
-import com.example.sprint16_architecture.util.Creator
 import com.example.sprint16_architecture.presentation.poster.PosterActivity
 import com.example.sprint16_architecture.util.MoviesState
-import moxy.MvpActivity
-import moxy.presenter.InjectPresenter
-import moxy.presenter.ProvidePresenter
+import com.example.sprint16_architecture.util.ToastState
 
-class MoviesActivity : MvpActivity(), MoviesView {
+class MoviesActivity : ComponentActivity() {
 
-    companion object { private const val CLICK_DEBOUNCE_DELAY = 1000L }
-    @InjectPresenter
-    lateinit var presenter: MoviesSearchPresenter
+    private lateinit var viewModel: MoviesSearchViewModel
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var queryInput: EditText
     private lateinit var placeholderMessage: TextView
@@ -35,24 +32,26 @@ class MoviesActivity : MvpActivity(), MoviesView {
     private lateinit var progressBar: ProgressBar
     private var isClickAllowed = true
     private var textWatcher: TextWatcher? = null
-    private val adapter = MoviesAdapter {
-        if (clickDebounce()) {
-            val intent = Intent(this, PosterActivity::class.java)
-            intent.putExtra("poster", it.image)
-            startActivity(intent)
+    private val adapter = MoviesAdapter(
+        object : MoviesAdapter.MovieClickListener {
+            override fun onMovieClick(movie: Movie) {
+                if (clickDebounce()) {
+                    val intent = Intent(this@MoviesActivity, PosterActivity::class.java)
+                    intent.putExtra("poster", movie.image)
+                    startActivity(intent)
+                }
+            }
+            override fun onFavoriteToggleClick(movie: Movie) {
+                viewModel.toggleFavorite(movie)
+            }
         }
-    }
-
-    @ProvidePresenter
-    fun providePresenter(): MoviesSearchPresenter {
-        return Creator.provideMoviesSearchPresenter(
-            context = this.applicationContext,
-        )
-    }
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movies)
+        viewModel =
+            ViewModelProvider(this, MoviesSearchViewModel.getViewModelFactory())[MoviesSearchViewModel::class.java]
 
         placeholderMessage = findViewById(R.id.placeholderMessage)
         queryInput = findViewById(R.id.queryInput)
@@ -65,18 +64,26 @@ class MoviesActivity : MvpActivity(), MoviesView {
         textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                presenter.searchDebounce(
+                viewModel.searchDebounce(
                     changedText = s?.toString() ?: ""
                 )
             }
             override fun afterTextChanged(s: Editable?) {}
         }
         textWatcher?.let { queryInput.addTextChangedListener(it) }
+
+        //подписки на LiveData
+        viewModel.observeViewState().observe(this) { render(it) }
+        viewModel.observeToastState().observe(this) { toastState ->
+            if(toastState is ToastState.Show) {
+                showToast(toastState.additionalMessage)
+                viewModel.toastWasShown()
+            }
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.onDestroy()
         textWatcher?.let { queryInput.removeTextChangedListener(it) }
     }
 
@@ -89,11 +96,11 @@ class MoviesActivity : MvpActivity(), MoviesView {
         return current
     }
 
-    override fun showToast(message: String) {
+    private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun render(state: MoviesState) {
+    private fun render(state: MoviesState) {
         when (state) {
             is MoviesState.Loading -> showLoading()
             is MoviesState.Content -> showContent(state.movies)
@@ -129,4 +136,7 @@ class MoviesActivity : MvpActivity(), MoviesView {
         adapter.movies.addAll(movies)
         adapter.notifyDataSetChanged()
     }
+
+    companion object { private const val CLICK_DEBOUNCE_DELAY = 1000L }
 }
+

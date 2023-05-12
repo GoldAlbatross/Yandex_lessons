@@ -1,7 +1,6 @@
 package com.example.sprint16_architecture
 
 import android.app.Application
-import com.example.sprint16_architecture.presentation.movies.MoviesSearchPresenter
 
 class App: Application() {
 
