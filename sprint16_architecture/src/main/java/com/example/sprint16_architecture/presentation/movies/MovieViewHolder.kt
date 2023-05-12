@@ -39,7 +39,7 @@ class MovieViewHolder(
 
     private fun getFavoriteToggleDrawable(inFavorite: Boolean): Drawable? {
         return itemView.context.getDrawable(
-            if(inFavorite) R.drawable.active_favorire else R.drawable.inactive_favorire
+            if(inFavorite) R.drawable.inactive_favorire else R.drawable.active_favorire
         )
     }
 }
