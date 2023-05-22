@@ -49,11 +49,9 @@ class RetrofitNetworkClient(private val context: Context) : NetworkClient {
 
         val response = imdbService.searchMovies(dto.expression).execute()
         val body = response.body()
-        return if (body != null) {
-            body.apply { resultCode = response.code() }
-        } else {
-            Response().apply { resultCode = response.code() }
-        }
+
+        return body?.apply { resultCode = response.code() }
+            ?: Response().apply { resultCode = response.code() }
     }
 
 }

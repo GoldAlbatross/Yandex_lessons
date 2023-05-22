@@ -38,11 +38,9 @@ class MoviesSearchViewModel(application: Application): AndroidViewModel(applicat
             return
         }
 
-        this.latestSearchText = changedText
+        latestSearchText = changedText
         handler.removeCallbacksAndMessages(SEARCH_REQUEST_TOKEN)
-
         val searchRunnable = Runnable { searchRequest(changedText) }
-
         val postTime = SystemClock.uptimeMillis() + SEARCH_DEBOUNCE_DELAY
         handler.postAtTime(
             searchRunnable,
@@ -70,7 +68,6 @@ class MoviesSearchViewModel(application: Application): AndroidViewModel(applicat
                                     errorMessage = getApplication<Application>().getString(R.string.something_went_wrong),
                                 )
                             )
-                            //toastWasShown()
                         }
 
                         movies.isEmpty() -> {

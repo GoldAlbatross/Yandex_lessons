@@ -64,9 +64,7 @@ class MoviesActivity : ComponentActivity() {
         textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.searchDebounce(
-                    changedText = s?.toString() ?: ""
-                )
+                viewModel.searchDebounce(changedText = s?.toString() ?: "")
             }
             override fun afterTextChanged(s: Editable?) {}
         }
@@ -74,6 +72,7 @@ class MoviesActivity : ComponentActivity() {
 
         //подписки на LiveData
         viewModel.observeViewState().observe(this) { render(it) }
+
         viewModel.observeToastState().observe(this) { toastState ->
             if(toastState is ToastState.Show) {
                 showToast(toastState.additionalMessage)

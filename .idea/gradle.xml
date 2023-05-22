@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/constraintlayout" />
             <option value="$PROJECT_DIR$/relativelayout" />
             <option value="$PROJECT_DIR$/sprint16_architecture" />
+            <option value="$PROJECT_DIR$/sprint17_di" />
           </set>
         </option>
       </GradleProjectSettings>
