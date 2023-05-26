@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Sprint18_fragments2</string>
+    <string name="replace">Replace</string>
+    <string name="replace_with_backstack">Replace with backstack</string>
+</resources>

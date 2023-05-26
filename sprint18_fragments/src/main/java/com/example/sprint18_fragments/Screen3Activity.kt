@@ -87,9 +87,14 @@ class Screen3Activity : AppCompatActivity(R.layout.activity_screen3) {
         handler.postDelayed({ callback.isEnabled = true }, 2000L)
     }
 
+//    private fun backToScreen1() {
+//        val intent = Intent(this, Screen1Activity::class.java)
+//        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//        this.startActivity(intent)
+//    }
     private fun backToScreen1() {
         val intent = Intent(this, Screen1Activity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+
         this.startActivity(intent)
     }
 }
