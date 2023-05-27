@@ -11,8 +11,9 @@ import com.example.sprint18_fragments4.databinding.FragmentBNestedBinding
 
 class NestedFragmentB : Fragment() {
 
-    private val binding by lazy(
-        LazyThreadSafetyMode.NONE) { FragmentBNestedBinding.inflate(layoutInflater) }
+    private val binding by lazy(LazyThreadSafetyMode.NONE) {
+        FragmentBNestedBinding.inflate(layoutInflater)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,6 +23,10 @@ class NestedFragmentB : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.songNestedB.text = (requireActivity() as SongNameProvider)
+            .getSongName()
+            .plus(other = " | NB")
 
         binding.button.setOnClickListener {
             parentFragmentManager.commit {

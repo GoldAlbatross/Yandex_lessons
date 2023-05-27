@@ -10,8 +10,9 @@
     tools:context=".NestedFragmentA">
 
     <TextView
+        android:id="@+id/song_nested_a"
         style="@style/InfoText"
-        android:text="@string/nested_fragment_a"/>
+        tools:text="Это Nested FragmentA!"/>
 
     <Button
         android:id="@+id/button"

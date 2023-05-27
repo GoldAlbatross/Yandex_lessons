@@ -8,11 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.example.sprint18_fragments4.databinding.FragmentANestedBinding
 
-// Первый вложенный фрагмент
 class NestedFragmentA : Fragment() {
 
-    private val binding by lazy(
-        LazyThreadSafetyMode.NONE) { FragmentANestedBinding.inflate(layoutInflater) }
+    private val binding by lazy(LazyThreadSafetyMode.NONE) {
+        FragmentANestedBinding.inflate(layoutInflater)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,9 +23,14 @@ class NestedFragmentA : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        binding.songNestedA.text = (requireActivity() as SongNameProvider)
+//            .getSongName()
+//            .plus(other = " | NA")
+
         binding.button.setOnClickListener {
             parentFragmentManager.commit {
                 replace(R.id.fragment_child_container, NestedFragmentB())
+                addToBackStack(null)
             }
         }
     }

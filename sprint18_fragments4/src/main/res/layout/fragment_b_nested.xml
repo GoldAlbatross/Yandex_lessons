@@ -8,13 +8,14 @@
     tools:context=".NestedFragmentB">
 
     <TextView
+        android:id="@+id/song_nested_b"
         style="@style/InfoText"
-        android:text="Это Nested FragmentB!"/>
+        tools:text="Это Nested FragmentB!"/>
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
-        android:text="Открыть NestedFragmentA"
+        android:text="@string/to_nested_fragment_a"
         android:textAllCaps="false"
         android:layout_height="wrap_content"/>
 
