@@ -2,8 +2,6 @@ package com.example.sprint18_fragments2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.add
-import androidx.fragment.app.commit
 import com.example.sprint18_fragments2.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

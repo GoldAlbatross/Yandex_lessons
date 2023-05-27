@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Sprint18_fragments3</string>
+    <string name="login">Login</string>
 </resources>

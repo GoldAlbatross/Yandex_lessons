@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Sprint18_fragments4</string>
+    <string name="main_activity">MainActivity</string>
+    <string name="fragment_a">FragmentA :)</string>
+    <string name="nested_fragment_a">Nested_Fragment_A!</string>
+    <string name="to_nested_fragment_b">to_Nested_Fragment_B</string>
+</resources>
