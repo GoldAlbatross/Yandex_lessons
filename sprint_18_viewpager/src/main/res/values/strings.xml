@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Sprint_18_Viewpager</string>
+    <string name="mainactivity">Это MainActivity</string>
+    <string name="to_nested_fragment_b">to_nested_fragment_b</string>
+</resources>
