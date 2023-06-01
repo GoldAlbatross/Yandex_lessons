@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import com.bumptech.glide.Glide
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sprint16_architecture.R
@@ -38,8 +39,8 @@ class MovieViewHolder(
     }
 
     private fun getFavoriteToggleDrawable(inFavorite: Boolean): Drawable? {
-        return itemView.context.getDrawable(
-            if(inFavorite) R.drawable.inactive_favorire else R.drawable.active_favorire
+        return AppCompatResources.getDrawable(itemView.context,
+            if (inFavorite) R.drawable.inactive_favorire else R.drawable.active_favorire
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.example.sprint16_architecture.util
+package com.example.sprint16_architecture.presentation.movies.model
 
 sealed interface ToastState {
     object None: ToastState

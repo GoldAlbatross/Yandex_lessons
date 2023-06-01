@@ -1,4 +1,4 @@
-package com.example.sprint16_architecture.util
+package com.example.sprint16_architecture.data.network
 
 sealed class Resource<T>(
     val data: T? = null,

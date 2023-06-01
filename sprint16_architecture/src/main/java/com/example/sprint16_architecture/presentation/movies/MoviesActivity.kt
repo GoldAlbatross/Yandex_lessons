@@ -12,19 +12,19 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sprint16_architecture.R
 import com.example.sprint16_architecture.domain.models.Movie
 import com.example.sprint16_architecture.presentation.poster.PosterActivity
-import com.example.sprint16_architecture.util.MoviesState
-import com.example.sprint16_architecture.util.ToastState
+import com.example.sprint16_architecture.presentation.movies.model.MoviesState
+import com.example.sprint16_architecture.presentation.movies.model.ToastState
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MoviesActivity : ComponentActivity() {
+class MoviesActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MoviesSearchViewModel
+    private val viewModel by viewModel<MoviesSearchViewModel>()
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var queryInput: EditText
     private lateinit var placeholderMessage: TextView
@@ -50,8 +50,6 @@ class MoviesActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movies)
-        viewModel =
-            ViewModelProvider(this, MoviesSearchViewModel.getViewModelFactory())[MoviesSearchViewModel::class.java]
 
         placeholderMessage = findViewById(R.id.placeholderMessage)
         queryInput = findViewById(R.id.queryInput)
@@ -72,13 +70,13 @@ class MoviesActivity : ComponentActivity() {
 
         //подписки на LiveData
         viewModel.observeViewState().observe(this) { render(it) }
-
         viewModel.observeToastState().observe(this) { toastState ->
             if(toastState is ToastState.Show) {
                 showToast(toastState.additionalMessage)
                 viewModel.toastWasShown()
             }
         }
+
     }
 
     override fun onDestroy() {

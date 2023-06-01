@@ -1,4 +1,4 @@
-package com.example.sprint16_architecture.data
+package com.example.sprint16_architecture.data.network
 
 import com.example.sprint16_architecture.data.dto.Response
 

@@ -1,8 +1,10 @@
-package com.example.sprint16_architecture.data.network
+package com.example.sprint16_architecture.data.shared_pref
 
 import android.content.SharedPreferences
 
-class LocalStorage(private val sharedPreferences: SharedPreferences) {
+class LocalStorage(
+    private val sharedPreferences: SharedPreferences
+) {
 
     fun addToFavorites(movieId: String) {
         changeFavorites(movieId = movieId, remove = false)

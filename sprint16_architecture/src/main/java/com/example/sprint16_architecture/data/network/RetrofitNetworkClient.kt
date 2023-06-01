@@ -3,7 +3,7 @@ package com.example.sprint16_architecture.data.network
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import com.example.sprint16_architecture.data.NetworkClient
+import com.example.sprint16_architecture.data.dto.MovieDetailsRequest
 import com.example.sprint16_architecture.data.dto.MoviesSearchRequest
 import com.example.sprint16_architecture.data.dto.Response
 import okhttp3.OkHttpClient
@@ -11,18 +11,11 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitNetworkClient(private val context: Context) : NetworkClient {
+class RetrofitNetworkClient(
+    private val imdbService: IMDbApiService,
+    private val context: Context
+    ) : NetworkClient {
 
-    private val imdbBaseUrl = "https://imdb-api.com"
-    private val logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-    private val client = OkHttpClient.Builder().addInterceptor(logging).build()
-    private val retrofit = Retrofit
-        .Builder()
-        .baseUrl(imdbBaseUrl)
-        .addConverterFactory(GsonConverterFactory.create())
-        .client(client)
-        .build()
-    private val imdbService = retrofit.create(IMDbApiService::class.java)
 
     private fun isConnected(): Boolean {
         val connectivityManager = context.getSystemService(
@@ -40,16 +33,17 @@ class RetrofitNetworkClient(private val context: Context) : NetworkClient {
     }
 
     override fun doRequest(dto: Any): Response {
-        if (isConnected() == false) {
+        if (!isConnected()) {
             return Response().apply { resultCode = -1 }
         }
-        if (dto !is MoviesSearchRequest) {
-            return Response().apply { resultCode = 400 }
+
+        val response = when (dto) {
+            is MoviesSearchRequest -> imdbService.searchMovies(dto.expression).execute()
+            is MovieDetailsRequest -> imdbService.getMovieDetails(dto.movieId).execute()
+            else -> return Response().apply { resultCode = 400 }
         }
 
-        val response = imdbService.searchMovies(dto.expression).execute()
         val body = response.body()
-
         return body?.apply { resultCode = response.code() }
             ?: Response().apply { resultCode = response.code() }
     }

@@ -8,26 +8,34 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.sprint16_architecture.App
 import com.example.sprint16_architecture.R
-import com.example.sprint16_architecture.util.Creator
 import com.example.sprint16_architecture.domain.api.MoviesInteractor
 import com.example.sprint16_architecture.domain.models.Movie
-import com.example.sprint16_architecture.util.MoviesState
-import com.example.sprint16_architecture.util.ToastState
+import com.example.sprint16_architecture.presentation.movies.model.MoviesState
+import com.example.sprint16_architecture.presentation.movies.model.ToastState
 
 
-class MoviesSearchViewModel(application: Application): AndroidViewModel(application) {
+class MoviesSearchViewModel(
+    application: Application,
+    private val moviesInteractor: MoviesInteractor,
+): AndroidViewModel(application) {
 
-    private val moviesInteractor = Creator.provideMoviesInteractor(getApplication<Application>())
     private val handler = Handler(Looper.getMainLooper())
     private val stateLiveData = MutableLiveData<MoviesState>()
     private val toastState = MutableLiveData<ToastState>(ToastState.None)
+    private val mediatorStateLiveData = MediatorLiveData<MoviesState>().also { liveData ->
+        liveData.addSource(stateLiveData) { movieState ->
+            liveData.value = when (movieState) {
+                is MoviesState.Content -> MoviesState.Content(movieState.movies.sortedByDescending { it.inFavorite })
+                is MoviesState.Empty -> movieState
+                is MoviesState.Error -> movieState
+                is MoviesState.Loading -> movieState
+            }
+        }
+    }
+
     private var latestSearchText: String? = null
-    fun observeViewState(): LiveData<MoviesState> = stateLiveData
+    fun observeViewState(): LiveData<MoviesState> = mediatorStateLiveData
     fun observeToastState(): LiveData<ToastState> = toastState
     override fun onCleared() {
         handler.removeCallbacksAndMessages(SEARCH_REQUEST_TOKEN)
@@ -53,13 +61,11 @@ class MoviesSearchViewModel(application: Application): AndroidViewModel(applicat
         if (newSearchText.isNotEmpty()) {
             renderState(MoviesState.Loading)
 
-            moviesInteractor.searchMovies(newSearchText, object : MoviesInteractor.MoviesConsumer {
-                override fun consume(foundMovies: List<Movie>?, errorMessage: String?) {
+            moviesInteractor.getDataFromApi(newSearchText, object : MoviesInteractor.Consumer {
+                override fun <T> consume(data: T?, errorMessage: String?) {
 
-                    val movies = mutableListOf<Movie>()
-                    if (foundMovies != null) {
-                        movies.addAll(foundMovies)
-                    }
+                    val response = mutableListOf<Movie>()
+                    if (data != null) { response.addAll(data as MutableList<Movie>) }
 
                     when {
                         errorMessage != null -> {
@@ -70,7 +76,7 @@ class MoviesSearchViewModel(application: Application): AndroidViewModel(applicat
                             )
                         }
 
-                        movies.isEmpty() -> {
+                        response.isEmpty() -> {
                             renderState(
                                 MoviesState.Empty(
                                     message = getApplication<Application>().getString(R.string.nothing_found),
@@ -81,13 +87,11 @@ class MoviesSearchViewModel(application: Application): AndroidViewModel(applicat
                         else -> {
                             renderState(
                                 MoviesState.Content(
-                                    movies = movies,
+                                    movies = response,
                                 )
                             )
                         }
                     }
-
-
                 }
             })
         }
@@ -123,28 +127,10 @@ class MoviesSearchViewModel(application: Application): AndroidViewModel(applicat
         }
     }
 
-    private val mediatorStateLiveData = MediatorLiveData<MoviesState>().also { liveData ->
-        liveData.addSource(stateLiveData) { movieState ->
-            liveData.value = when (movieState) {
-                is MoviesState.Content -> MoviesState.Content(movieState.movies.sortedByDescending { it.inFavorite })
-                is MoviesState.Empty -> movieState
-                is MoviesState.Error -> movieState
-                is MoviesState.Loading -> movieState
-            }
-        }
-    }
-
-    fun observeState(): LiveData<MoviesState> = mediatorStateLiveData
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
         private val SEARCH_REQUEST_TOKEN = Any()
-        fun getViewModelFactory(): ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                val app = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as App)
-                MoviesSearchViewModel(application = app)
-            }
-        }
     }
 
 }

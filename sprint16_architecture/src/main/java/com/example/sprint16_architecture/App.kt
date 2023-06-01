@@ -1,16 +1,20 @@
 package com.example.sprint16_architecture
 
 import android.app.Application
+import com.example.sprint16_architecture.di.dataModule
+import com.example.sprint16_architecture.di.interactorModule
+import com.example.sprint16_architecture.di.repositoryModule
+import com.example.sprint16_architecture.di.viewModelModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.GlobalContext.startKoin
 
 class App: Application() {
 
-    companion object{
-        lateinit var instance: App
-        private set
-    }
-
     override fun onCreate() {
         super.onCreate()
-        instance = this
+        startKoin {
+            androidContext(this@App)
+            modules(dataModule, repositoryModule, interactorModule, viewModelModule)
+        }
     }
 }
