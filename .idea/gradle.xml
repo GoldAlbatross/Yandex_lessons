@@ -13,7 +13,6 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/constraintlayout" />
             <option value="$PROJECT_DIR$/relativelayout" />
-            <option value="$PROJECT_DIR$/sprint16_architecture" />
             <option value="$PROJECT_DIR$/sprint17_di" />
             <option value="$PROJECT_DIR$/sprint18_fragments" />
             <option value="$PROJECT_DIR$/sprint18_fragments2" />
@@ -21,6 +20,7 @@
             <option value="$PROJECT_DIR$/sprint18_fragments4" />
             <option value="$PROJECT_DIR$/sprint_18_5_viewpager" />
             <option value="$PROJECT_DIR$/sprint_18_6_tablayout" />
+            <option value="$PROJECT_DIR$/sprint_19_imdb_api" />
           </set>
         </option>
       </GradleProjectSettings>

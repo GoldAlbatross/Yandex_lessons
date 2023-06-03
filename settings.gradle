@@ -16,7 +16,7 @@ rootProject.name = "Yandex_lesson"
 include ':app'
 include ':relativelayout'
 include ':constraintlayout'
-include ':sprint16_architecture'
+include ':sprint_19_imdb_api'
 include ':sprint17_di'
 include ':sprint18_fragments'
 include ':sprint18_fragments2'
