@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.example.sprint16_architecture.databinding.FragmentAboutBinding
 import com.example.sprint16_architecture.domain.models.MovieDetails
@@ -14,27 +15,17 @@ import org.koin.core.parameter.parametersOf
 
 class AboutFragment : Fragment() {
 
-    companion object {
-        private const val MOVIE_ID = "movie_id"
 
-        fun newInstance(movieId: String) = AboutFragment().apply {
-            arguments = Bundle().apply {
-                putString(MOVIE_ID, movieId)
-            }
-        }
-    }
-
+    private val binding by lazy { FragmentAboutBinding.inflate(layoutInflater) }
     private val aboutViewModel: AboutViewModel by viewModel {
         parametersOf(requireArguments().getString(MOVIE_ID))
     }
 
-    private lateinit var binding: FragmentAboutBinding
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        binding = FragmentAboutBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View { return binding.root }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -70,5 +61,12 @@ class AboutFragment : Fragment() {
             plot.text = movieDetails.plot
         }
 
+    }
+
+    companion object {
+        private const val MOVIE_ID = "movie_id"
+        fun newInstance(movieId: String) = AboutFragment().apply {
+            arguments = bundleOf(MOVIE_ID to movieId)
+        }
     }
 }

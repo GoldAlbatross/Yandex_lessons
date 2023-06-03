@@ -9,20 +9,18 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailsActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDetailsBinding
-
+    private val binding by lazy { ActivityDetailsBinding.inflate(layoutInflater) }
     private lateinit var tabMediator: TabLayoutMediator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val poster = intent.getStringExtra("poster") ?: ""
         val movieId = intent.getStringExtra("id") ?: ""
 
-        binding.viewPager.adapter = DetailsViewPagerAdapter(supportFragmentManager,
-            lifecycle, poster, movieId)
+        binding.viewPager.adapter =
+            DetailsViewPagerAdapter(supportFragmentManager, lifecycle, poster, movieId)
 
         tabMediator = TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when(position) {

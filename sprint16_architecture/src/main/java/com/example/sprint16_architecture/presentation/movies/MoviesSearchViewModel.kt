@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -11,6 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.sprint16_architecture.R
 import com.example.sprint16_architecture.domain.api.MoviesInteractor
 import com.example.sprint16_architecture.domain.models.Movie
+import com.example.sprint16_architecture.domain.models.SearchType
 import com.example.sprint16_architecture.presentation.movies.model.MoviesState
 import com.example.sprint16_architecture.presentation.movies.model.ToastState
 
@@ -61,7 +63,7 @@ class MoviesSearchViewModel(
         if (newSearchText.isNotEmpty()) {
             renderState(MoviesState.Loading)
 
-            moviesInteractor.getDataFromApi(newSearchText, object : MoviesInteractor.Consumer {
+            moviesInteractor.getDataFromApi(newSearchText, SearchType.MOVIES, object : MoviesInteractor.Consumer {
                 override fun <T> consume(data: T?, errorMessage: String?) {
 
                     val response = mutableListOf<Movie>()

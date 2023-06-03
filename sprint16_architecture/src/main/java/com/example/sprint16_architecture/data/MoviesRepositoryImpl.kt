@@ -37,16 +37,15 @@ class MoviesRepositoryImpl(
 
         val response = networkClient.doRequest(MovieDetailsRequest(movieId))
         return when (response.resultCode) {
-            -1 -> {
-                Resource.Error("Проверьте подключение к интернету")
-            }
+            -1 -> Resource.Error("Проверьте подключение к интернету")
             200 -> {
                 with(response as MovieDetailsResponse) {
                     Resource.Success(MovieDetails(id, title, imDbRating, year,
-                        countries, genres, directors, writers, stars, plot)) }
+                        countries, genres, directors, writers, stars, plot))
+                }
             }
             else -> {
-                Resource.Error("Ошибка сервера")
+                Resource.Error("Ошибка сервера", null)
             }
         }
     }

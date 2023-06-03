@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Yandex_lesson">
         <activity
-            android:name=".presentation.poster.PosterActivity"
+            android:name=".presentation.poster.details.DetailsActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.movies.MoviesActivity"

@@ -1,14 +1,15 @@
 package com.example.sprint16_architecture.domain.api
 
 import com.example.sprint16_architecture.domain.models.Movie
+import com.example.sprint16_architecture.domain.models.SearchType
 
 interface MoviesInteractor {
 
-    fun getDataFromApi(expression: String, consumer: Consumer)
+    fun getDataFromApi(expression: String, type: SearchType, consumer: Consumer)
     fun addMovieToFavorites(movie: Movie)
     fun removeMovieFromFavorites(movie: Movie)
 
-    interface Consumer {
+    interface Consumer{
         fun <T> consume(data: T?, errorMessage: String?)
     }
 

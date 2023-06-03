@@ -17,9 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sprint16_architecture.R
 import com.example.sprint16_architecture.domain.models.Movie
-import com.example.sprint16_architecture.presentation.poster.PosterActivity
 import com.example.sprint16_architecture.presentation.movies.model.MoviesState
 import com.example.sprint16_architecture.presentation.movies.model.ToastState
+import com.example.sprint16_architecture.presentation.poster.details.DetailsActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MoviesActivity : AppCompatActivity() {
@@ -32,13 +32,15 @@ class MoviesActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private var isClickAllowed = true
     private var textWatcher: TextWatcher? = null
-    private val adapter = MoviesAdapter(
-        object : MoviesAdapter.MovieClickListener {
+    private val adapter =
+        MoviesAdapter(object : MoviesAdapter.MovieClickListener {
             override fun onMovieClick(movie: Movie) {
                 if (clickDebounce()) {
-                    val intent = Intent(this@MoviesActivity, PosterActivity::class.java)
-                    intent.putExtra("poster", movie.image)
-                    startActivity(intent)
+                    Intent(this@MoviesActivity, DetailsActivity::class.java).apply {
+                        putExtra("poster", movie.image)
+                        putExtra("id", movie.id)
+                        startActivity(this)
+                    }
                 }
             }
             override fun onFavoriteToggleClick(movie: Movie) {
