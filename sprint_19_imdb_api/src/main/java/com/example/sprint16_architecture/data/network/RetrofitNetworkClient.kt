@@ -3,13 +3,10 @@ package com.example.sprint16_architecture.data.network
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import com.example.sprint16_architecture.data.dto.MovieDetailsRequest
-import com.example.sprint16_architecture.data.dto.MoviesSearchRequest
+import com.example.sprint16_architecture.data.dto.details.MovieDetailsRequest
+import com.example.sprint16_architecture.data.dto.search.MoviesSearchRequest
 import com.example.sprint16_architecture.data.dto.Response
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.sprint16_architecture.data.dto.cast.MovieCastRequest
 
 class RetrofitNetworkClient(
     private val imdbService: IMDbApiService,
@@ -33,13 +30,13 @@ class RetrofitNetworkClient(
     }
 
     override fun doRequest(dto: Any): Response {
-        if (!isConnected()) {
+        if (!isConnected())
             return Response().apply { resultCode = -1 }
-        }
 
         val response = when (dto) {
             is MoviesSearchRequest -> imdbService.searchMovies(dto.expression).execute()
             is MovieDetailsRequest -> imdbService.getMovieDetails(dto.movieId).execute()
+            is MovieCastRequest -> imdbService.getMovieCast(dto.movieId).execute()
             else -> return Response().apply { resultCode = 400 }
         }
 

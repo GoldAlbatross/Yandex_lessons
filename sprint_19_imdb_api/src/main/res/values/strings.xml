@@ -12,4 +12,7 @@
     <string name="writer">Сценарист:</string>
     <string name="cast">В ролях:</string>
     <string name="plot">Сюжет:</string>
+    <string name="favorite">favorite</string>
+    <string name="show_cast">show cast</string>
+    <string name="movies_cast">Movies cast</string>
 </resources>

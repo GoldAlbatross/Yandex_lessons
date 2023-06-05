@@ -1,54 +1,61 @@
 package com.example.sprint16_architecture.data
 
-import com.example.sprint16_architecture.data.dto.MovieDetailsRequest
-import com.example.sprint16_architecture.data.dto.MovieDetailsResponse
-import com.example.sprint16_architecture.data.dto.MoviesSearchRequest
-import com.example.sprint16_architecture.data.dto.MoviesSearchResponse
+import com.example.sprint16_architecture.data.converters.MovieCastConverter
+import com.example.sprint16_architecture.data.dto.cast.MovieCastRequest
+import com.example.sprint16_architecture.data.dto.cast.MovieCastResponse
+import com.example.sprint16_architecture.data.dto.details.MovieDetailsRequest
+import com.example.sprint16_architecture.data.dto.details.MovieDetailsResponse
+import com.example.sprint16_architecture.data.dto.search.MoviesSearchRequest
+import com.example.sprint16_architecture.data.dto.search.MoviesSearchResponse
 import com.example.sprint16_architecture.data.shared_pref.LocalStorage
 import com.example.sprint16_architecture.data.network.NetworkClient
 import com.example.sprint16_architecture.domain.api.MoviesRepository
 import com.example.sprint16_architecture.domain.models.Movie
 import com.example.sprint16_architecture.domain.models.MovieDetails
 import com.example.sprint16_architecture.data.network.Resource
+import com.example.sprint16_architecture.domain.models.MovieCast
 
 class MoviesRepositoryImpl(
     private val networkClient: NetworkClient,
     private val localStorage: LocalStorage,
+    private val movieCastConverter: MovieCastConverter,
 ) : MoviesRepository {
 
     override fun searchMovies(expression: String): Resource<List<Movie>> {
-
         val response = networkClient.doRequest(MoviesSearchRequest(expression))
         return when (response.resultCode) {
-            -1 -> {
-                Resource.Error("Проверьте подключение к интернету")
-            }
             200 -> {
                 val stored = localStorage.getSavedFavorites()
                 Resource.Success((response as MoviesSearchResponse).results.map {
                     Movie(it.id, it.resultType, it.image, it.title, it.description, stored.contains(it.id))})
             }
-            else -> {
-                Resource.Error("Ошибка сервера")
-            }
+            -1 -> Resource.Error("Проверьте подключение к интернету")
+            else -> Resource.Error("Ошибка сервера")
         }
     }
     override fun searchDetails(movieId: String): Resource<MovieDetails> {
-
         val response = networkClient.doRequest(MovieDetailsRequest(movieId))
         return when (response.resultCode) {
-            -1 -> Resource.Error("Проверьте подключение к интернету")
             200 -> {
                 with(response as MovieDetailsResponse) {
                     Resource.Success(MovieDetails(id, title, imDbRating, year,
                         countries, genres, directors, writers, stars, plot))
                 }
             }
-            else -> {
-                Resource.Error("Ошибка сервера", null)
-            }
+            -1 -> Resource.Error("Проверьте подключение к интернету")
+            else -> Resource.Error("Ошибка сервера")
         }
     }
+
+    override fun searchMovieCast(movieId: String): Resource<MovieCast> {
+        val response = networkClient.doRequest(MovieCastRequest(movieId))
+        return when (response.resultCode) {
+            200 -> Resource.Success(data = movieCastConverter.convert(response as MovieCastResponse))
+            -1 -> Resource.Error("Проверьте подключение к интернету")
+            else -> Resource.Error("Ошибка сервера")
+        }
+    }
+
 
     override fun addMovieToFavorites(movie: Movie) {
         localStorage.addToFavorites(movie.id)

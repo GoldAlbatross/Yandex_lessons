@@ -12,12 +12,13 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@color/white"
-        app:tabRippleColor="#FFEB3B"
+        app:tabRippleColor="#F4F1D1"
         app:tabTextColor="@color/black"
         app:tabIndicatorColor="@color/black"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="4dp"/>
 </LinearLayout>
