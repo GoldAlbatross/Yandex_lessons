@@ -1,17 +1,15 @@
 package com.example.sprint16_architecture.di
 
 import android.content.Context
-import com.example.sprint16_architecture.data.MoviesRepositoryImpl
-import com.example.sprint16_architecture.data.converters.MovieCastConverter
-import com.example.sprint16_architecture.data.network.IMDbApiService
-import com.example.sprint16_architecture.data.shared_pref.LocalStorage
-import com.example.sprint16_architecture.data.network.NetworkClient
-import com.example.sprint16_architecture.data.network.RetrofitNetworkClient
-import com.example.sprint16_architecture.domain.api.MoviesRepository
+import com.example.sprint16_architecture.core.data.converters.MovieCastConverter
+import com.example.sprint16_architecture.core.data.network.IMDbApiService
+import com.example.sprint16_architecture.core.data.network.NetworkClient
+import com.example.sprint16_architecture.core.data.network.RetrofitNetworkClient
+import com.example.sprint16_architecture.core.data.shared_pref.LocalStorage
+import com.example.sprint16_architecture.core.domain.api.MoviesRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
-import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -40,7 +38,13 @@ val dataModule = module {
     
     single<NetworkClient> { RetrofitNetworkClient(get(), androidContext()) }
 
-    single<MoviesRepository> { MoviesRepositoryImpl(get(), get(), get()) }
+    single<MoviesRepository> {
+        com.example.sprint16_architecture.core.data.MoviesRepositoryImpl(
+            get(),
+            get(),
+            get()
+        )
+    }
 
     single { MovieCastConverter() }
 }

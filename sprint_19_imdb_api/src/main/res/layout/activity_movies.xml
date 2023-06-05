@@ -3,12 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="#404040">
 
     <EditText android:id="@+id/queryInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:backgroundTint="#F4F1D1"
+        android:textCursorDrawable="@drawable/cursor_color"
         android:layout_gravity="center_vertical"
         android:textColor="@color/black"
         android:imeOptions="actionDone"

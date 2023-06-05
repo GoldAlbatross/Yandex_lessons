@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Yandex_lesson">
         <activity
-            android:name=".ui.movies.activity.MoviesActivity"
+            android:name=".core.ui.movies.activity.MoviesActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,10 +20,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.poster.activity.DetailsActivity"
+            android:name=".core.ui.poster.activity.DetailsActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.cast.MoviesCastActivity"
+            android:name=".core.ui.cast.MoviesCastActivity"
             android:exported="true"/>
     </application>
 

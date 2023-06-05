@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="#F4F1D1">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@color/white"
+        android:background="#F4F1D1"
         app:tabRippleColor="#F4F1D1"
         app:tabTextColor="@color/black"
         app:tabIndicatorColor="@color/black"/>
