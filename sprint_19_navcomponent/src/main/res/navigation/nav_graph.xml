@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation_graph"
+    app:startDestination="@id/startFragment">
+
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.example.sprint_19_navcomponent.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/action_startFragment_to_factFragment"
+            app:destination="@id/factFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <!--action  //новый фрагмент заезжает справа, текущий стоит
+            android:id="@+id/action_startFragment_to_factFragment"
+            app:destination="@id/factFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/hold"
+            app:popEnterAnim="@anim/hold"
+            app:popExitAnim="@anim/slide_out_right"/-->
+    </fragment>
+
+    <fragment
+        android:id="@+id/factFragment"
+        android:name="com.example.sprint_19_navcomponent.FactFragment"
+        android:label="fragment_fact"
+        tools:layout="@layout/fragment_fact" >
+        <action
+            android:id="@+id/action_factFragment_to_imageFragment"
+            app:destination="@id/imageFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <!--action
+            android:id="@+id/action_factFragment_to_imageFragment"
+            app:destination="@id/imageFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/hold"
+            app:popEnterAnim="@anim/hold"
+            app:popExitAnim="@anim/slide_out_right"/-->
+    </fragment>
+
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="com.example.sprint_19_navcomponent.ImageFragment"
+        android:label="fragment_image"
+        tools:layout="@layout/fragment_image" />
+</navigation>
