@@ -1,4 +1,4 @@
-package com.example.sprint16_architecture.core.ui.movies.view_model
+package com.example.sprint16_architecture.core.ui.movies
 
 import android.app.Application
 import android.os.Handler
@@ -12,8 +12,6 @@ import com.example.sprint16_architecture.R
 import com.example.sprint16_architecture.core.domain.api.MoviesInteractor
 import com.example.sprint16_architecture.core.domain.models.Movie
 import com.example.sprint16_architecture.core.domain.models.SearchType
-import com.example.sprint16_architecture.core.ui.movies.model.MoviesState
-import com.example.sprint16_architecture.core.ui.movies.model.ToastState
 
 
 class MoviesSearchViewModel(

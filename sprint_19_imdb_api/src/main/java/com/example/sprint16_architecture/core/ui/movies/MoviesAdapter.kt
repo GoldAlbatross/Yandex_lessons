@@ -1,4 +1,4 @@
-package com.example.sprint16_architecture.core.ui.movies.activity
+package com.example.sprint16_architecture.core.ui.movies
 
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -6,11 +6,33 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
-import com.bumptech.glide.Glide
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.sprint16_architecture.R
 import com.example.sprint16_architecture.core.domain.models.Movie
 
+class MoviesAdapter(
+    private val clickListener: MovieClickListener
+) : RecyclerView.Adapter<MovieViewHolder>() {
+
+    var movies = ArrayList<Movie>()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder =
+        MovieViewHolder(parent,clickListener)
+
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        holder.bind(movies[position])
+    }
+
+    override fun getItemCount(): Int = movies.size
+
+    interface MovieClickListener {
+        fun onMovieClick(movie: Movie)
+        fun onFavoriteToggleClick(movie: Movie)
+    }
+}
+
+//==================================================================================================
 
 class MovieViewHolder(
     parent: ViewGroup,

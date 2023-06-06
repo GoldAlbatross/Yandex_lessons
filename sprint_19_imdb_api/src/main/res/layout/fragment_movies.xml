@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:backgroundTint="#F4F1D1"
+        android:backgroundTint="@color/black"
         android:textCursorDrawable="@drawable/cursor_color"
         android:layout_gravity="center_vertical"
         android:textColor="@color/black"
@@ -26,7 +26,8 @@
             android:indeterminateTint="@color/black"
             android:visibility="gone"/>
 
-        <androidx.recyclerview.widget.RecyclerView android:id="@+id/locations"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

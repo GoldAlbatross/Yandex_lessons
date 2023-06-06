@@ -14,10 +14,6 @@
         <activity
             android:name=".core.ui.movies.activity.MoviesActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".core.ui.poster.activity.DetailsActivity"
@@ -25,6 +21,14 @@
         <activity
             android:name=".core.ui.cast.MoviesCastActivity"
             android:exported="true"/>
+        <activity
+            android:name=".core.ui.root.RootActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

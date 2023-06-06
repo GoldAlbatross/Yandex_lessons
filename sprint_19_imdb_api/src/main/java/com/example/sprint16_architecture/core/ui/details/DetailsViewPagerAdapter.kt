@@ -1,11 +1,9 @@
-package com.example.sprint16_architecture.core.ui.poster.activity
+package com.example.sprint16_architecture.core.ui.details
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.sprint16_architecture.core.ui.poster.activity.fragment.AboutFragment
-import com.example.sprint16_architecture.core.ui.poster.activity.fragment.PosterFragment
 
 class DetailsViewPagerAdapter(
     fragmentManager: FragmentManager,

@@ -1,4 +1,4 @@
-package com.example.sprint16_architecture.core.ui.poster.activity.fragment
+package com.example.sprint16_architecture.core.ui.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import com.example.sprint16_architecture.R
 import com.example.sprint16_architecture.databinding.FragmentAboutBinding
 import com.example.sprint16_architecture.core.domain.models.MovieDetails
-import com.example.sprint16_architecture.core.ui.cast.MoviesCastActivity
-import com.example.sprint16_architecture.core.ui.poster.model.AboutState
-import com.example.sprint16_architecture.core.ui.poster.view_model.AboutViewModel
+import com.example.sprint16_architecture.core.ui.cast.MovieCastFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -40,11 +40,15 @@ class AboutFragment : Fragment() {
         }
 
         binding.castBtn.setOnClickListener {
-            startActivity(
-                MoviesCastActivity.newInstance(
-                context = requireContext(),
-                movieId = arguments?.getString(MOVIE_ID).orEmpty(),
-            ))
+            parentFragment?.parentFragmentManager?.commit {
+                replace(
+                    R.id.rootFragmentContainerView,
+                    MovieCastFragment.newInstance(movieId = arguments?.getString(MOVIE_ID) ?: ""),
+                    TAG,
+                )
+                addToBackStack(TAG)
+                setReorderingAllowed(true)
+            }
         }
     }
 
@@ -74,6 +78,7 @@ class AboutFragment : Fragment() {
     }
 
     companion object {
+        const val TAG = "movie_cast_fragment"
         private const val MOVIE_ID = "movie_id"
         fun newInstance(movieId: String) = AboutFragment().apply {
             arguments = bundleOf(MOVIE_ID to movieId)

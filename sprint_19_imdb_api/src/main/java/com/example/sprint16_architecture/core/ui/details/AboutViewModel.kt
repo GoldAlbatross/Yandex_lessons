@@ -1,4 +1,4 @@
-package com.example.sprint16_architecture.core.ui.poster.view_model
+package com.example.sprint16_architecture.core.ui.details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.sprint16_architecture.core.domain.api.MoviesInteractor
 import com.example.sprint16_architecture.core.domain.models.MovieDetails
 import com.example.sprint16_architecture.core.domain.models.SearchType
-import com.example.sprint16_architecture.core.ui.poster.model.AboutState
+import com.example.sprint16_architecture.core.ui.details.AboutState
 
 class AboutViewModel(
     movieId: String,

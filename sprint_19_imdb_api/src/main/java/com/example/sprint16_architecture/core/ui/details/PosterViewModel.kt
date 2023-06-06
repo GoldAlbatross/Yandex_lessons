@@ -1,4 +1,4 @@
-package com.example.sprint16_architecture.core.ui.poster.view_model
+package com.example.sprint16_architecture.core.ui.details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -1,39 +1,46 @@
 package com.example.sprint16_architecture.core.ui.cast
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sprint16_architecture.databinding.ActivityMoviesCastBinding
+import com.example.sprint16_architecture.databinding.FragmentMoviesCastBinding
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class MoviesCastActivity : AppCompatActivity() {
+class MovieCastFragment: Fragment() {
 
-    private val binding by lazy (LazyThreadSafetyMode.NONE) {
-        ActivityMoviesCastBinding.inflate(layoutInflater) }
-    private val viewModel: MovieCastViewModel by viewModel {
-        parametersOf(intent.getStringExtra(ARGS_MOVIE_ID))
+    private val binding by lazy(LazyThreadSafetyMode.NONE) {
+        FragmentMoviesCastBinding.inflate(layoutInflater)
+    }
+    private val viewModel by viewModel<MovieCastViewModel>{
+        parametersOf(arguments?.getString(KEY_MOVIE_ID) ?: "")
     }
     private val adapter = ListDelegationAdapter(
         movieCastHeaderDelegate(),
         movieCastPersonDelegate(),
     )
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View { return binding.root }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
             moviesCastRecyclerView.adapter = adapter
-            moviesCastRecyclerView.layoutManager = LinearLayoutManager(this@MoviesCastActivity)
+            moviesCastRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         }
 
-        viewModel.observeState().observe(this) {
+        viewModel.observeState().observe(viewLifecycleOwner) {
             when (it) {
                 is MoviesCastState.Content -> showContent(it)
                 is MoviesCastState.Error -> showError(it)
@@ -65,10 +72,10 @@ class MoviesCastActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val ARGS_MOVIE_ID = "movie_id"
-        fun newInstance(context: Context, movieId: String): Intent {
-            return Intent(context, MoviesCastActivity::class.java).apply {
-                putExtra(ARGS_MOVIE_ID, movieId)
+        private const val KEY_MOVIE_ID = "movie_id"
+        fun newInstance(movieId: String): Fragment {
+            return MovieCastFragment().apply {
+                arguments = bundleOf(KEY_MOVIE_ID to movieId)
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.example.sprint16_architecture.core.ui.movies.model
+package com.example.sprint16_architecture.core.ui.movies
 
 import com.example.sprint16_architecture.core.domain.models.Movie
 
