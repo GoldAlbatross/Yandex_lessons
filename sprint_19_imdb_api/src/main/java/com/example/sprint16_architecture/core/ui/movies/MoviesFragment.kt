@@ -14,8 +14,10 @@ import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sprint16_architecture.R
 import com.example.sprint16_architecture.core.domain.models.Movie
+import com.example.sprint16_architecture.core.navigation.Router
 import com.example.sprint16_architecture.core.ui.details.DetailsFragment
 import com.example.sprint16_architecture.databinding.FragmentMoviesBinding
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MoviesFragment: Fragment(R.layout.fragment_movies) {
@@ -27,24 +29,22 @@ class MoviesFragment: Fragment(R.layout.fragment_movies) {
     private val handler = Handler(Looper.getMainLooper())
     private var isClickAllowed = true
     private var textWatcher: TextWatcher? = null
-    private val adapter =
-        MoviesAdapter(object : MoviesAdapter.MovieClickListener {
-            override fun onMovieClick(movie: Movie) {
-                if (clickDebounce()) { parentFragmentManager.commit {
-                    replace(
-                        R.id.rootFragmentContainerView,
-                        DetailsFragment.newInstance(movie.id, movie.image),
-                        DetailsFragment.TAG
+    private val router: Router by inject()
+    private val adapter = MoviesAdapter(object : MoviesAdapter.MovieClickListener {
+        override fun onMovieClick(movie: Movie) {
+            if (clickDebounce()) {
+                router.openFragment(
+                    DetailsFragment.newInstance(
+                        movieId = movie.id,
+                        posterUrl = movie.image
                     )
-                    addToBackStack(DetailsFragment.TAG)
-                    setReorderingAllowed(true)
-                } }
-            }
-            override fun onFavoriteToggleClick(movie: Movie) {
-                viewModel.toggleFavorite(movie)
+                )
             }
         }
-        )
+        override fun onFavoriteToggleClick(movie: Movie) {
+            viewModel.toggleFavorite(movie)
+        }
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater,

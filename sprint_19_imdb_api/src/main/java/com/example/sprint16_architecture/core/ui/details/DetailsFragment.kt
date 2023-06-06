@@ -45,8 +45,6 @@ class DetailsFragment: Fragment(R.layout.fragment_details) {
     companion object {
         private const val MOVIE_ID_KEY = "movie_id"
         private const val POSTER_URL_KEY = "poster_url"
-        const val TAG = "details_fragment"
-
         fun newInstance(movieId: String, posterUrl: String): Fragment {
             return DetailsFragment().apply {
                 // Пробрасываем аргументы в Bundle

@@ -10,7 +10,9 @@ import androidx.fragment.app.commit
 import com.example.sprint16_architecture.R
 import com.example.sprint16_architecture.databinding.FragmentAboutBinding
 import com.example.sprint16_architecture.core.domain.models.MovieDetails
+import com.example.sprint16_architecture.core.navigation.Router
 import com.example.sprint16_architecture.core.ui.cast.MovieCastFragment
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -18,10 +20,12 @@ class AboutFragment : Fragment() {
 
 
     private val binding by lazy(LazyThreadSafetyMode.NONE) {
-        FragmentAboutBinding.inflate(layoutInflater) }
+        FragmentAboutBinding.inflate(layoutInflater)
+    }
     private val aboutViewModel: AboutViewModel by viewModel {
         parametersOf(requireArguments().getString(MOVIE_ID))
     }
+    private val router : Router by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,15 +44,9 @@ class AboutFragment : Fragment() {
         }
 
         binding.castBtn.setOnClickListener {
-            parentFragment?.parentFragmentManager?.commit {
-                replace(
-                    R.id.rootFragmentContainerView,
-                    MovieCastFragment.newInstance(movieId = arguments?.getString(MOVIE_ID) ?: ""),
-                    TAG,
-                )
-                addToBackStack(TAG)
-                setReorderingAllowed(true)
-            }
+            router.openFragment(
+                MovieCastFragment.newInstance(movieId = arguments?.getString(MOVIE_ID) ?: "")
+            )
         }
     }
 
@@ -78,7 +76,6 @@ class AboutFragment : Fragment() {
     }
 
     companion object {
-        const val TAG = "movie_cast_fragment"
         private const val MOVIE_ID = "movie_id"
         fun newInstance(movieId: String) = AboutFragment().apply {
             arguments = bundleOf(MOVIE_ID to movieId)
