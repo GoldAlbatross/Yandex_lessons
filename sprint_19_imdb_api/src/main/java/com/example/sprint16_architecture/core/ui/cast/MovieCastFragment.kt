@@ -73,10 +73,8 @@ class MovieCastFragment: Fragment() {
 
     companion object {
         private const val KEY_MOVIE_ID = "movie_id"
-        fun newInstance(movieId: String): Fragment {
-            return MovieCastFragment().apply {
-                arguments = bundleOf(KEY_MOVIE_ID to movieId)
-            }
-        }
+        fun createArgs(movieId: String): Bundle =
+            bundleOf(KEY_MOVIE_ID to movieId)
     }
+
 }

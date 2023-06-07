@@ -15,11 +15,10 @@ class StartFragment : Fragment(R.layout.fragment_start) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val catButton = activity?.findViewById<Button>(R.id.catButton)!!
-        val hamsterButton = activity?.findViewById<Button>(R.id.hamsterButton)!!
+        val catButton = view.findViewById<Button>(R.id.catButton)!!
+        val hamsterButton = view.findViewById<Button>(R.id.hamsterButton)!!
 
         catButton.setOnClickListener {
-            Log.d("qqq","+++cat_fact")
             findNavController().navigate(
                 resId = R.id.action_startFragment_to_factFragment,
                 args = FactFragment.createArgs(getString(R.string.cat_fact)),
@@ -27,7 +26,6 @@ class StartFragment : Fragment(R.layout.fragment_start) {
         }
 
         hamsterButton.setOnClickListener {
-            Log.d("qqq","+++hamster_fact")
             findNavController().navigate(
                 resId = R.id.action_startFragment_to_factFragment,
                 args = FactFragment.createArgs(getString(R.string.hamster_fact)),

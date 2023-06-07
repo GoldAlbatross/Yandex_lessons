@@ -16,16 +16,15 @@ class ImageFragment : Fragment(R.layout.fragment_image) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val goToStartButton = activity?.findViewById<Button>(R.id.goToStartButton)!!
-        val back = activity?.findViewById<ImageView>(R.id.back)!!
-        val image = activity?.findViewById<ImageView>(R.id.image)!!
+        val goToStartButton = view.findViewById<Button>(R.id.goToStartButton)!!
+        val back = view.findViewById<ImageView>(R.id.back)!!
+        val image = view.findViewById<ImageView>(R.id.image)!!
 
         goToStartButton.setOnClickListener {
             findNavController().popBackStack(R.id.startFragment, true)
         }
 
         back.setOnClickListener {
-            Log.d("qqq","+++back")
             findNavController().navigateUp()
         }
 

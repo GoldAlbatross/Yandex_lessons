@@ -21,19 +21,17 @@ class FactFragment : Fragment(R.layout.fragment_fact) {
 
         val text = arguments?.getString(ARGS_FACT) ?: ""
 
-        val fact = activity?.findViewById<TextView>(R.id.fact)!!
-        val imageButton = activity?.findViewById<Button>(R.id.imageButton)!!
-        val back = activity?.findViewById<ImageView>(R.id.back)!!
+        val fact = view.findViewById<TextView>(R.id.fact)!!
+        val imageButton = view.findViewById<Button>(R.id.imageButton)!!
+        val back = view.findViewById<ImageView>(R.id.back)!!
 
         fact.text = text
 
         val imageId =
             if (text == getString(R.string.cat_fact)) {
-                Log.d("qqq","+++cat")
                 R.drawable.cat
             }
             else {
-                Log.d("qqq","+++hamster")
                 R.drawable.hamster
             }
 

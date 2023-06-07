@@ -19,8 +19,8 @@ class DetailsFragment: Fragment(R.layout.fragment_details) {
         val poster = arguments?.getString(POSTER_URL_KEY) ?: ""
         val movieId = arguments?.getString(MOVIE_ID_KEY) ?: ""
 
-        val viewPager = activity?.findViewById<ViewPager2>(R.id.viewPager)!!
-        val tabLayout = activity?.findViewById<TabLayout>(R.id.tabLayout)!!
+        val viewPager = view.findViewById<ViewPager2>(R.id.viewPager)!!
+        val tabLayout = view.findViewById<TabLayout>(R.id.tabLayout)!!
         viewPager.adapter = DetailsViewPagerAdapter(
                 fragmentManager = childFragmentManager,
                 lifecycle = lifecycle,
@@ -45,14 +45,7 @@ class DetailsFragment: Fragment(R.layout.fragment_details) {
     companion object {
         private const val MOVIE_ID_KEY = "movie_id"
         private const val POSTER_URL_KEY = "poster_url"
-        fun newInstance(movieId: String, posterUrl: String): Fragment {
-            return DetailsFragment().apply {
-                // Пробрасываем аргументы в Bundle
-                arguments = bundleOf(
-                    MOVIE_ID_KEY to movieId,
-                    POSTER_URL_KEY to posterUrl
-                )
-            }
-        }
+        fun createArgs(id: String, image: String): Bundle =
+            bundleOf(MOVIE_ID_KEY to id,POSTER_URL_KEY to image)
     }
 }

@@ -10,14 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sprint16_architecture.R
 import com.example.sprint16_architecture.core.domain.models.Movie
-import com.example.sprint16_architecture.core.navigation.Router
 import com.example.sprint16_architecture.core.ui.details.DetailsFragment
 import com.example.sprint16_architecture.databinding.FragmentMoviesBinding
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MoviesFragment: Fragment(R.layout.fragment_movies) {
@@ -29,15 +27,12 @@ class MoviesFragment: Fragment(R.layout.fragment_movies) {
     private val handler = Handler(Looper.getMainLooper())
     private var isClickAllowed = true
     private var textWatcher: TextWatcher? = null
-    private val router: Router by inject()
     private val adapter = MoviesAdapter(object : MoviesAdapter.MovieClickListener {
         override fun onMovieClick(movie: Movie) {
             if (clickDebounce()) {
-                router.openFragment(
-                    DetailsFragment.newInstance(
-                        movieId = movie.id,
-                        posterUrl = movie.image
-                    )
+                findNavController().navigate(
+                    resId = R.id.action_moviesFragment_to_detailsFragment,
+                    args = DetailsFragment.createArgs(movie.id, movie.image)
                 )
             }
         }

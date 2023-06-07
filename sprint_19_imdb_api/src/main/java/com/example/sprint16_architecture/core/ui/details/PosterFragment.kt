@@ -41,8 +41,7 @@ class PosterFragment : Fragment() {
 
     companion object {
         private const val POSTER_URL = "poster_url"
-        fun newInstance(posterUrl: String) = PosterFragment().apply {
-            arguments = bundleOf(POSTER_URL to posterUrl)
-        }
+        fun newInstance(posterUrl: String): Fragment =
+            PosterFragment().apply { arguments = bundleOf(POSTER_URL to posterUrl) }
     }
 }
