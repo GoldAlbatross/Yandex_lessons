@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/textFragment">
+
+    <fragment
+        android:id="@+id/textFragment"
+        android:name="com.example.sprint_19_bottomnavview.TextFragment"
+        android:label="fragment_text"
+        tools:layout="@layout/fragment_text" />
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="com.example.sprint_19_bottomnavview.ImageFragment"
+        android:label="fragment_image"
+        tools:layout="@layout/fragment_image" />
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.example.sprint_19_bottomnavview.HelpFragment"
+        android:label="fragment_help"
+        tools:layout="@layout/fragment_help" >
+        <action
+            android:id="@+id/action_helpFragment_to_speciesFragment"
+            app:destination="@id/speciesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/speciesFragment"
+        android:name="com.example.sprint_19_bottomnavview.SpeciesFragment"
+        android:label="fragment_species"
+        tools:layout="@layout/fragment_species" />
+</navigation>
