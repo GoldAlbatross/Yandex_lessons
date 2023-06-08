@@ -5,21 +5,27 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".App"
+        android:name=".application.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Yandex_lesson">
         <activity
-            android:name=".presentation.poster.details.DetailsActivity"
-            android:exported="false" />
+            android:name=".core.ui.movies.activity.MoviesActivity"
+            android:exported="true">
+        </activity>
         <activity
-            android:name=".presentation.movies.MoviesActivity"
+            android:name=".core.ui.poster.activity.DetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".core.ui.cast.MoviesCastActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".core.ui.root.RootActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

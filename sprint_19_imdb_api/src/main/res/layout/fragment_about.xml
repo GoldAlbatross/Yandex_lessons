@@ -1,8 +1,11 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="#F4F1D1"
+    android:orientation="vertical"
+    tools:context="com.example.sprint16_architecture.core.ui.details.AboutFragment">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -139,6 +142,16 @@
                 app:layout_constraintTop_toBottomOf="@id/plotTitle"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:id="@+id/cast_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/section_margin"
+                android:text="@string/show_cast"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/plot" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 </ScrollView>
