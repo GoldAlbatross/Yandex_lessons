@@ -43,6 +43,7 @@ class FactFragment : Fragment(R.layout.fragment_fact) {
         }
 
         back.setOnClickListener {
+
             findNavController().navigateUp()
         }
 
