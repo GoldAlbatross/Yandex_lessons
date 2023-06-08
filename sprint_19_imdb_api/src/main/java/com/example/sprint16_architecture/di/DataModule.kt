@@ -1,12 +1,14 @@
 package com.example.sprint16_architecture.di
 
 import android.content.Context
+import com.example.sprint16_architecture.core.data.NamesRepositoryImpl
 import com.example.sprint16_architecture.core.data.converters.MovieCastConverter
 import com.example.sprint16_architecture.core.data.network.IMDbApiService
 import com.example.sprint16_architecture.core.data.network.NetworkClient
 import com.example.sprint16_architecture.core.data.network.RetrofitNetworkClient
 import com.example.sprint16_architecture.core.data.shared_pref.LocalStorage
 import com.example.sprint16_architecture.core.domain.api.MoviesRepository
+import com.example.sprint16_architecture.core.domain.api.NamesRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -40,11 +42,12 @@ val dataModule = module {
 
     single<MoviesRepository> {
         com.example.sprint16_architecture.core.data.MoviesRepositoryImpl(
-            get(),
-            get(),
-            get()
+            networkClient = get(),
+            localStorage = get(),
+            movieCastConverter = get()
         )
     }
 
     single { MovieCastConverter() }
+    single<NamesRepository> { NamesRepositoryImpl(networkClient = get()) }
 }

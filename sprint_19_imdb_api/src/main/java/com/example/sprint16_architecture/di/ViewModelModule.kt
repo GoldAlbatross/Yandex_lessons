@@ -5,6 +5,7 @@ import com.example.sprint16_architecture.core.ui.cast.MovieCastViewModel
 import com.example.sprint16_architecture.core.ui.movies.MoviesSearchViewModel
 import com.example.sprint16_architecture.core.ui.details.AboutViewModel
 import com.example.sprint16_architecture.core.ui.details.PosterViewModel
+import com.example.sprint16_architecture.core.ui.name.NamesViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -26,15 +27,20 @@ val viewModelModule = module {
     }
 
     viewModel {(posterUrl: String) ->
-        PosterViewModel(
-            posterUrl = posterUrl,
-        )
+        PosterViewModel(posterUrl = posterUrl,)
     }
 
     viewModel { (movieId: String) ->
         MovieCastViewModel(
             movieId = movieId,
             moviesInteractor = get(),
+        )
+    }
+
+    viewModel {
+        NamesViewModel(
+            context = androidContext(),
+            namesInteractor = get(),
         )
     }
 }
