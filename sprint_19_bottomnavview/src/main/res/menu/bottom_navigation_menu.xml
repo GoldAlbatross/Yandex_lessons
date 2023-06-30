@@ -7,7 +7,7 @@
         android:title="@string/fact" />
 
     <item
-        android:id="@+id/imageFragment"
+        android:id="@+id/image"
         android:icon="@drawable/ic_image"
         android:title="@string/image" />
 

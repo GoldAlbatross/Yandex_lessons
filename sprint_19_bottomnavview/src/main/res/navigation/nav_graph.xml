@@ -11,7 +11,7 @@
         android:label="fragment_text"
         tools:layout="@layout/fragment_text" />
     <fragment
-        android:id="@+id/imageFragment"
+        android:id="@+id/image"
         android:name="com.example.sprint_19_bottomnavview.ImageFragment"
         android:label="fragment_image"
         tools:layout="@layout/fragment_image" />
