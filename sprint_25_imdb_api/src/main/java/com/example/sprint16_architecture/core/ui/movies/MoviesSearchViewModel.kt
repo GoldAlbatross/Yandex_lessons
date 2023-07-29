@@ -61,9 +61,8 @@ class MoviesSearchViewModel(
         if (newSearchText.isNotEmpty()) {
             renderState(MoviesState.Loading)
 
-            moviesInteractor.getDataFromApi(
+            moviesInteractor.getMovies(
                 expression = newSearchText,
-                type = SearchType.MOVIES,
                 consumer = object : MoviesInteractor.Consumer {
                 override fun <T> consume(data: T?, errorMessage: String?) {
 

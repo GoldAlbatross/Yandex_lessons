@@ -1,9 +1,10 @@
 package com.example.sprint16_architecture.core.ui.name
 
+import android.app.Application
 import android.content.Context
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sprint16_architecture.R
 import com.example.sprint16_architecture.core.domain.api.NamesInteractor
@@ -11,12 +12,13 @@ import com.example.sprint16_architecture.core.domain.models.Person
 import com.example.sprint16_architecture.core.ui.SingleLiveEvent
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class NamesViewModel(
-    private val context: Context,
+    private val appContext: Application,
     private val namesInteractor: NamesInteractor
-) : ViewModel() {
+) : AndroidViewModel(appContext) {
 
     private val stateLiveData = MutableLiveData<NamesState>()
     fun observeState(): LiveData<NamesState> = stateLiveData
@@ -43,45 +45,25 @@ class NamesViewModel(
         if (newSearchText.isNotEmpty()) {
             renderState(NamesState.Loading)
 
-            namesInteractor.searchNames(newSearchText, object : NamesInteractor.NamesConsumer {
-                override fun consume(foundNames: List<Person>?, errorMessage: String?) {
-                    val persons = mutableListOf<Person>()
-                    if (foundNames != null) {
-                        persons.addAll(foundNames)
-                    }
-
+            viewModelScope.launch {
+                namesInteractor.searchNames(newSearchText).collect { pair ->
                     when {
-                        errorMessage != null -> {
-                            renderState(
-                                NamesState.Error(
-                                    message = context.getString(R.string.something_went_wrong),
-                                )
-                            )
-                            showToast.postValue(errorMessage)
+                        pair.first == null -> { renderState(
+                            NamesState.Error(message = appContext.getString(R.string.something_went_wrong)))
+                            //showToast.postValue(pair.second)
+                            showToast.value = pair.second
                         }
-
-                        persons.isEmpty() -> {
-                            renderState(
-                                NamesState.Empty(
-                                    message = context.getString(R.string.nothing_found),
-                                )
-                            )
+                        pair.first!!.isEmpty() -> { renderState(
+                            NamesState.Empty(message = appContext.getString(R.string.nothing_found)))
                         }
-
-                        else -> {
-                            renderState(
-                                NamesState.Content(
-                                    persons = persons,
-                                )
-                            )
+                        else -> { renderState(
+                            NamesState.Content(persons = pair.first!!))
                         }
                     }
-
                 }
-            })
+            }
         }
     }
-
     private fun renderState(state: NamesState) {
         stateLiveData.postValue(state)
     }

@@ -5,6 +5,7 @@ import com.example.sprint16_architecture.core.ui.cast.MovieCastViewModel
 import com.example.sprint16_architecture.core.ui.movies.MoviesSearchViewModel
 import com.example.sprint16_architecture.core.ui.details.AboutViewModel
 import com.example.sprint16_architecture.core.ui.details.PosterViewModel
+import com.example.sprint16_architecture.core.ui.history.HistoryViewModel
 import com.example.sprint16_architecture.core.ui.name.NamesViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -39,8 +40,14 @@ val viewModelModule = module {
 
     viewModel {
         NamesViewModel(
-            context = androidContext(),
+            appContext = androidContext() as App,
             namesInteractor = get(),
+        )
+    }
+
+    viewModel {
+        HistoryViewModel(
+            historyInteractor = get()
         )
     }
 }

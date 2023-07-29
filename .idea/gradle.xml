@@ -25,6 +25,10 @@
             <option value="$PROJECT_DIR$/sprint_19_navcomponent" />
             <option value="$PROJECT_DIR$/sprint_20_coroutines" />
             <option value="$PROJECT_DIR$/sprint_20_rxjava" />
+            <option value="$PROJECT_DIR$/sprint_21_room" />
+            <option value="$PROJECT_DIR$/sprint_22_database" />
+            <option value="$PROJECT_DIR$/sprint_22_gridlayout" />
+            <option value="$PROJECT_DIR$/sprint_22_photopicker" />
             <option value="$PROJECT_DIR$/sprint_25_imdb_api" />
           </set>
         </option>

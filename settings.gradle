@@ -10,6 +10,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "Yandex_lesson"
@@ -29,3 +30,7 @@ include ':sprint_19_bottomnavview'
 include ':sprint_20_rxjava'
 include ':remove_handler'
 include ':sprint_20_coroutines'
+include ':sprint_21_room'
+include ':sprint_22_database'
+include ':sprint_22_photopicker'
+include ':sprint_22_gridlayout'

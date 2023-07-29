@@ -3,13 +3,13 @@ package com.example.sprint16_architecture.core.data.network
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.util.Log
 import com.example.sprint16_architecture.core.data.dto.Response
 import com.example.sprint16_architecture.core.data.dto.cast.MovieCastRequest
 import com.example.sprint16_architecture.core.data.dto.details.MovieDetailsRequest
 import com.example.sprint16_architecture.core.data.dto.name_search.NamesSearchRequest
-import com.example.sprint16_architecture.core.data.dto.name_search.NamesSearchResponse
 import com.example.sprint16_architecture.core.data.dto.search.MoviesSearchRequest
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class RetrofitNetworkClient(
     private val imdbService: IMDbApiService,
@@ -37,7 +37,6 @@ class RetrofitNetworkClient(
             return Response().apply { resultCode = -1 }
 
         val response = when (dto) {
-            is NamesSearchRequest -> imdbService.searchNames(dto.expression).execute()
             is MoviesSearchRequest -> imdbService.searchMovies(dto.expression).execute()
             is MovieDetailsRequest -> imdbService.getMovieDetails(dto.movieId).execute()
             is MovieCastRequest -> imdbService.getMovieCast(dto.movieId).execute()
@@ -47,6 +46,23 @@ class RetrofitNetworkClient(
         val body = response.body()
         return body?.apply { resultCode = response.code() }
             ?: Response().apply { resultCode = response.code() }
+    }
+
+    override suspend fun doRequestSuspend(dto: Any): Response {
+        if (!isConnected())
+            return Response().apply { resultCode = -1 }
+
+        if (dto !is NamesSearchRequest)
+            return Response().apply { resultCode = 400 }
+
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = imdbService.searchNames(dto.expression)
+                response.apply { resultCode = 200 }
+            } catch (e: Throwable) {
+                Response().apply { resultCode = 500 }
+            }
+        }
     }
 
 }

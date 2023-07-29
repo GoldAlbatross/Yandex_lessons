@@ -1,4 +1,4 @@
-package com.example.sprint16_architecture.core.data.shared_pref
+package com.example.sprint16_architecture.core.data.storage.prefs
 
 import android.content.SharedPreferences
 
