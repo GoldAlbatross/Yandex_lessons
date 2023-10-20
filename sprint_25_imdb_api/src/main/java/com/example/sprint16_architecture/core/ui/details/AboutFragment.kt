@@ -70,7 +70,6 @@ class AboutFragment : Fragment() {
             castValue.text = movieDetails.stars
             plot.text = movieDetails.plot
         }
-
     }
 
     companion object {

@@ -7,6 +7,7 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="jbr-17" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -30,6 +31,8 @@
             <option value="$PROJECT_DIR$/sprint_22_gridlayout" />
             <option value="$PROJECT_DIR$/sprint_22_photopicker" />
             <option value="$PROJECT_DIR$/sprint_25_imdb_api" />
+            <option value="$PROJECT_DIR$/test_01_fragment_constructor" />
+            <option value="$PROJECT_DIR$/test_02_repeatonlificycle" />
           </set>
         </option>
       </GradleProjectSettings>
